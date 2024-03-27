@@ -3,12 +3,11 @@ import 'package:total_pos/generated/protos/main.pb.dart';
 import 'package:total_pos/grpc/client.dart';
 
 class RouteAdminUsersNofitier extends Notifier<List<AccountResponse>> {
-  RouteAdminUsersNofitier() {
-    getAccounts();
-  }
-
   @override
-  build() => [];
+  build() {
+    getAccounts();
+    return [];
+  }
 
   final _grpcClient = GrpcClientSingleton();
 

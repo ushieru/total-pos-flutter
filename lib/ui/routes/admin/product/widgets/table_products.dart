@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_product_categories.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_products_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:total_pos/ui/routes/admin/product/route_admin_product_update.dart';
+import 'package:total_pos/ui/routes/admin/product/route_admin_products_provider.dart';
 import 'package:total_pos/ui/widgets/dialogs/dialog_confirm.dart';
 
 class TableProducts extends ConsumerWidget {
@@ -40,12 +41,12 @@ class TableProducts extends ConsumerWidget {
                 icon: const Icon(Icons.delete, color: Colors.red)),
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                      context, RouteAdminProductCategories.routeName,
-                      arguments:
-                          RouteAdminProductCategoriesArguments(product.id));
+                  context
+                      .pushNamed(RouteAdminProductUpdate.routeName,
+                          extra: product)
+                      .then((_) => methods.getProducts());
                 },
-                icon: const Icon(Icons.link, color: Colors.deepPurple)),
+                icon: const Icon(Icons.edit, color: Colors.deepPurple)),
           ])),
         ])
     ]);

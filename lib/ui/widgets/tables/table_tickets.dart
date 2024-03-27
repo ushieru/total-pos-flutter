@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_tickets_provider.dart';
+import 'package:total_pos/ui/routes/admin/ticket/route_admin_tickets_provider.dart';
 
 class TableTickets extends ConsumerWidget {
   const TableTickets({super.key});

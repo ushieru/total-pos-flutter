@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grpc/grpc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:total_pos/generated/protos/main.pbgrpc.dart';
 import 'package:total_pos/grpc/client.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_dashboard.dart';
+import 'package:total_pos/ui/routes/admin/dashboard/route_admin_dashboard.dart';
 import 'package:total_pos/ui/routes/cashier/route_cashier_dashboard.dart';
 import 'package:total_pos/ui/routes/waiter/route_waiter_tables.dart';
 import 'package:total_pos/ui/utils/session.dart';
 
 class RouteLogin extends StatelessWidget {
-  static const routeName = "/login";
+  static const routeName = "login";
+  static const routePath = "/login";
   const RouteLogin({super.key});
 
   void onLogin(BuildContext context, String username, String password) async {
@@ -21,8 +23,7 @@ class RouteLogin extends StatelessWidget {
       SessionSingleton().account = loginResponse.account;
       switch (loginResponse.account.accountType) {
         case AccountType.ADMIN:
-          Navigator.pushNamedAndRemoveUntil(
-              context, RouteAdminDashboard.routeName, (route) => false);
+          context.pushReplacementNamed(RouteAdminDashboard.routeName);
         case AccountType.CASHIER:
           Navigator.pushNamedAndRemoveUntil(
               context, RouteCashierDashboard.routeName, (route) => false);

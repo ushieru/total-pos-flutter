@@ -3,22 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:total_pos/generated/protos/main.pb.dart';
 import 'package:total_pos/grpc/client.dart';
 
-class RouteAdminProductCategoriesNofifier
-    extends Notifier<RouteAdminProductCategoriesState> {
+class RouteAdminProductNofifier extends Notifier<RouteAdminProductUpdateState> {
   @override
   build() {
     getCategories();
-    return RouteAdminProductCategoriesState(Product(), [], [], []);
+    return RouteAdminProductUpdateState([], [], []);
   }
 
   final _grpcClient = GrpcClientSingleton();
-
-  Future<void> getProduct(String id) async {
-    await _grpcClient.productClient
-        .readProductById(ProductByIdRequest(id: id))
-        .then((product) => state = state.copyWith(product: product))
-        .then((state) => getCategoriesByProductId(state.product.id));
-  }
 
   void _filterCategories() {
     final filterCategories = state.categories
@@ -43,44 +35,48 @@ class RouteAdminProductCategoriesNofifier
         .then((_) => _filterCategories());
   }
 
-  Future<void> addCategoryToProduct(String categoryId) async {
+  Future<void> addCategoryToProduct(Product product, String categoryId) async {
     await _grpcClient.productClient
         .createProductCategoryLink(RequestCategoryProduct(
-            productId: state.product.id, categoryId: categoryId))
-        .then((_) => getCategoriesByProductId(state.product.id));
+            productId: product.id, categoryId: categoryId))
+        .then((_) => getCategoriesByProductId(product.id));
   }
 
-  Future<void> deleteCategoryToProduct(String categoryId) async {
+  Future<void> deleteCategoryToProduct(
+      Product product, String categoryId) async {
     await _grpcClient.productClient
         .deleteProductCategoryLink(RequestCategoryProduct(
-            productId: state.product.id, categoryId: categoryId))
-        .then((_) => getCategoriesByProductId(state.product.id));
+            productId: product.id, categoryId: categoryId))
+        .then((_) => getCategoriesByProductId(product.id));
+  }
+
+  Future<void> updateProduct(
+      Product product, String name, String description, double price) async {
+    await _grpcClient.productClient.updateProduct(UpdateProductRequest(
+        id: product.id, name: name, description: description, price: price));
   }
 }
 
-class RouteAdminProductCategoriesState {
-  RouteAdminProductCategoriesState(this.product, this.categories,
-      this.productCategories, this.filtercategories);
+class RouteAdminProductUpdateState {
+  RouteAdminProductUpdateState(
+      this.categories, this.productCategories, this.filtercategories);
 
-  final Product product;
   final List<Category> categories;
   final List<Category> filtercategories;
   final List<Category> productCategories;
 
-  RouteAdminProductCategoriesState copyWith({
-    Product? product,
+  RouteAdminProductUpdateState copyWith({
     List<Category>? categories,
     List<Category>? productCategories,
     List<Category>? filtercategories,
   }) {
-    return RouteAdminProductCategoriesState(
-        product ?? this.product,
+    return RouteAdminProductUpdateState(
         categories ?? this.categories,
         productCategories ?? this.productCategories,
         filtercategories ?? this.filtercategories);
   }
 }
 
-final routeAdminProductCategoriesProvider = NotifierProvider<
-    RouteAdminProductCategoriesNofifier,
-    RouteAdminProductCategoriesState>(RouteAdminProductCategoriesNofifier.new);
+final routeAdminProductUpdateProvider =
+    NotifierProvider<RouteAdminProductNofifier, RouteAdminProductUpdateState>(
+        RouteAdminProductNofifier.new);

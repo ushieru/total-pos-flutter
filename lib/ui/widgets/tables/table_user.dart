@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_users_provider.dart';
+import 'package:total_pos/ui/routes/admin/user/route_admin_users_provider.dart';
 import 'package:total_pos/ui/widgets/dialogs/dialog_confirm.dart';
 
 class TableUsers extends ConsumerWidget {

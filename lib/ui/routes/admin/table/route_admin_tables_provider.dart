@@ -6,12 +6,11 @@ import 'package:total_pos/generated/protos/main.pbgrpc.dart';
 import 'package:total_pos/grpc/client.dart';
 
 class RouteAdminTablesNofitier extends Notifier<List<Table>> {
-  RouteAdminTablesNofitier() {
-    getTables();
-  }
-
   @override
-  build() => [];
+  build() {
+    getTables();
+    return [];
+  }
 
   final _grpcClient = GrpcClientSingleton();
 

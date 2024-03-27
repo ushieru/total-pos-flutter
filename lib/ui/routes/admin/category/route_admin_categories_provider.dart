@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:total_pos/generated/protos/main.pb.dart';
+import 'package:total_pos/generated/protos/main.pbgrpc.dart';
 import 'package:total_pos/grpc/client.dart';
 
 class RouteAdminCateogiresNofitier extends Notifier<List<Category>> {
-  RouteAdminCateogiresNofitier() {
-    getCategories();
-  }
-
   @override
-  build() => [];
+  build() {
+    getCategories();
+    return [];
+  }
 
   final _grpcClient = GrpcClientSingleton();
 
@@ -21,6 +21,12 @@ class RouteAdminCateogiresNofitier extends Notifier<List<Category>> {
   Future<void> createCategory(String name) async {
     await _grpcClient.categoryClient
         .createCategory(CreateCategoryRequest(name: name))
+        .then((_) => getCategories());
+  }
+
+  Future<void> updateCategory(Category category, String newName) async {
+    await _grpcClient.categoryClient
+        .updateCategory(UpdateCategoryRequest(id: category.id, name: newName))
         .then((_) => getCategories());
   }
 

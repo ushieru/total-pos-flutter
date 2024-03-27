@@ -3,12 +3,11 @@ import 'package:total_pos/generated/protos/main.pb.dart';
 import 'package:total_pos/grpc/client.dart';
 
 class RouteAdminTicketsNofitier extends Notifier<List<Ticket>> {
-  RouteAdminTicketsNofitier() {
-    getTickets();
-  }
-
   @override
-  build() => [];
+  build() {
+    getTickets();
+    return [];
+  }
 
   final _grpcClient = GrpcClientSingleton();
 

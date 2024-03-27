@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:total_pos/ui/layouts/layout_admin.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_tables_provider.dart';
+import 'package:total_pos/ui/routes/admin/table/route_admin_tables_provider.dart';
 import 'package:total_pos/ui/widgets/dialogs/dialog_confirm.dart';
 
 class RouteAdminTables extends ConsumerWidget {
-  static const routeName = "/admin/tables";
+  static const routeName = "admin.tables";
+  static const routePath = "/admin/tables";
   RouteAdminTables({super.key});
 
   final _newTableNameController = TextEditingController();
@@ -14,47 +14,41 @@ class RouteAdminTables extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final methods = ref.read(routeAdminTablesProvider.notifier);
-    return LayoutAdmin(
-        child: Expanded(
-            child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(children: [
-                  SizedBox(
-                      width: double.maxFinite,
-                      child: Card(
-                          child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Column(children: [
-                                TextFormField(
-                                  controller: _newTableNameController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Nombre de la nueva mesa'),
-                                ),
-                                const SizedBox(height: 10),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      if (_newTableNameController.text
-                                          .trim()
-                                          .isEmpty) {
-                                        showToast(
-                                            'No se permiten nombres vacios',
-                                            position: ToastPosition.bottom);
-                                        return;
-                                      }
-                                      methods.createTable(
-                                          _newTableNameController.text);
-                                      _newTableNameController.text = '';
-                                    },
-                                    child: const Text('Nueva mesa')),
-                              ])))),
-                  const Expanded(
-                      child: Card(
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: TablesDraggableCanvas())))
-                ]))));
+    return Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(children: [
+          SizedBox(
+              width: double.maxFinite,
+              child: Card(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: Column(children: [
+                        TextFormField(
+                          controller: _newTableNameController,
+                          decoration: const InputDecoration(
+                              labelText: 'Nombre de la nueva mesa'),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                            onPressed: () {
+                              if (_newTableNameController.text.trim().isEmpty) {
+                                showToast('No se permiten nombres vacios',
+                                    position: ToastPosition.bottom);
+                                return;
+                              }
+                              methods.createTable(_newTableNameController.text);
+                              _newTableNameController.text = '';
+                            },
+                            child: const Text('Nueva mesa')),
+                      ])))),
+          const Expanded(
+              child: Card(
+                  child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: TablesDraggableCanvas())))
+        ]));
   }
 }
 
