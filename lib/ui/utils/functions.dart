@@ -4,8 +4,8 @@ void Function(Function f) once() {
   bool canExec = true;
   return (callback) {
     if (canExec) {
-      callback();
       canExec = false;
+      callback();
     }
   };
 }
