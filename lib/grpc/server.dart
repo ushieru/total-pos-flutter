@@ -18,9 +18,11 @@ import 'package:total_pos/repositories/drift/table_drift_repository.dart';
 import 'package:total_pos/repositories/drift/ticket_drift_repository.dart';
 
 class GrpcServer {
+  Server? server;
+
   Future<void> main() async {
     bootstrap();
-    final server = Server.create(
+    server ??= Server.create(
       services: [
         AuthService(),
         AccountService(),
@@ -33,8 +35,14 @@ class GrpcServer {
         AuthInterceptor(skipMethods: ['Login']).interceptor
       ],
     );
-    await server.serve(port: 8080);
-    print('Server listening on port ${server.port}...');
+    await server!.serve(port: 8080);
+    print('Server listening on port ${server!.port}...');
+  }
+
+  Future<void> stop() async {
+    if (server == null) return;
+    await server!.shutdown();
+    print('Shutdown server');
   }
 
   void bootstrap() {
