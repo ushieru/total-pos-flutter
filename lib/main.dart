@@ -5,7 +5,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:total_pos/grpc/server.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_categories.dart';
+import 'package:total_pos/ui/routes/admin/route_admin_categories/route_admin_categories.dart';
+import 'package:total_pos/ui/routes/admin/route_admin_categories/route_admin_categories_new.dart';
 import 'package:total_pos/ui/routes/admin/route_admin_dashboard.dart';
 import 'package:total_pos/ui/routes/admin/route_admin_product_categories.dart';
 import 'package:total_pos/ui/routes/admin/route_admin_products.dart';
@@ -59,6 +60,8 @@ class MyApp extends StatelessWidget {
             return noAnimated(const RouteAdminUsers());
           case RouteAdminCategories.routeName:
             return noAnimated(const RouteAdminCategories());
+          case RouteAdminCategoriesNew.routeName:
+            return noAnimated(RouteAdminCategoriesNew());
           case RouteAdminProduct.routeName:
             return noAnimated(const RouteAdminProduct());
           case RouteAdminProductCategories.routeName:

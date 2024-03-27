@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_categories_provider.dart';
+import 'package:total_pos/ui/routes/admin/route_admin_categories/route_admin_categories_provider.dart';
 import 'package:total_pos/ui/widgets/dialogs/dialog_confirm.dart';
 
 class TableCategories extends ConsumerWidget {

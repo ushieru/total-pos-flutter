@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:total_pos/ui/layouts/widgets/layout_sidebar_button.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_categories.dart';
+import 'package:total_pos/ui/routes/admin/route_admin_categories/route_admin_categories.dart';
 import 'package:total_pos/ui/routes/admin/route_admin_dashboard.dart';
 import 'package:total_pos/ui/routes/admin/route_admin_products.dart';
 import 'package:total_pos/ui/routes/admin/route_admin_tables.dart';

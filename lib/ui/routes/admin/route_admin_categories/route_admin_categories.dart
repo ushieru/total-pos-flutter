@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:total_pos/ui/layouts/layout_admin.dart';
-import 'package:total_pos/ui/routes/admin/route_admin_categories_provider.dart';
-import 'package:total_pos/ui/widgets/dialogs/dialog_create_new_category.dart';
+import 'package:total_pos/ui/routes/admin/route_admin_categories/route_admin_categories_new.dart';
 import 'package:total_pos/ui/widgets/tables/table_categories.dart';
 
 class RouteAdminCategories extends ConsumerWidget {
@@ -11,7 +10,6 @@ class RouteAdminCategories extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final methods = ref.read(routeAdminCateogiresProvider.notifier);
     return LayoutAdmin(
         child: Expanded(
             child: Padding(
@@ -25,11 +23,8 @@ class RouteAdminCategories extends ConsumerWidget {
                                   horizontal: 20, vertical: 10),
                               child: ElevatedButton(
                                   onPressed: () {
-                                    DialogCreateNewCategory.show(context)
-                                        .then((name) {
-                                      if (name == null) return;
-                                      methods.createCategory(name);
-                                    });
+                                    Navigator.pushReplacementNamed(context,
+                                        RouteAdminCategoriesNew.routeName);
                                   },
                                   child: const Text('Nueva categoria'))))),
                   const SizedBox(

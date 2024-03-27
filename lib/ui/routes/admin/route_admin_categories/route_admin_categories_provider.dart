@@ -18,8 +18,8 @@ class RouteAdminCateogiresNofitier extends Notifier<List<Category>> {
         .then((categoriesResponse) => state = categoriesResponse.categories);
   }
 
-  void createCategory(String name) {
-    _grpcClient.categoryClient
+  Future<void> createCategory(String name) async {
+    await _grpcClient.categoryClient
         .createCategory(CreateCategoryRequest(name: name))
         .then((_) => getCategories());
   }
