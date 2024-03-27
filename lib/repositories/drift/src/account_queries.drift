@@ -1,0 +1,36 @@
+import 'user.drift';
+import 'account.drift';
+findAccountByUserAndPassword:
+SELECT "id",
+    "account_type",
+    "is_active"
+FROM "account"
+WHERE "username" = ?
+    AND "password" = ?;
+getAccountsWithUser:
+SELECT "account"."id" AS "id",
+    "account"."username" AS "username",
+    "account"."password" AS "password",
+    "account"."account_type" AS "account_type",
+    "account"."is_active" AS "is_active",
+    "account"."created_at" AS "created_at",
+    "account"."updated_at" AS "updated_at",
+    "user"."id" AS "user_id",
+    "user"."name" AS "name",
+    "user"."email" AS "email"
+FROM "account"
+    INNER JOIN "user" ON "account"."user_id" = "user"."id";
+getAccountWithUserByAccountId:
+SELECT "account"."id" AS "id",
+    "account"."username" AS "username",
+    "account"."password" AS "password",
+    "account"."account_type" AS "account_type",
+    "account"."is_active" AS "is_active",
+    "account"."created_at" AS "created_at",
+    "account"."updated_at" AS "updated_at",
+    "user"."id" AS "user_id",
+    "user"."name" AS "name",
+    "user"."email" AS "email"
+FROM "account"
+    INNER JOIN "user" ON "account"."user_id" = "user"."id"
+WHERE "account"."id" = ?;

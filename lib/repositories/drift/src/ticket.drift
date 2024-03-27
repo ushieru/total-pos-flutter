@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS "ticket" (
+    "id" TEXT NOT NULL,
+    "account_id" TEXT NOT NULL,
+    "ticket_status" TEXT NOT NULL,
+    "total" REAL NOT NULL,
+    "created_at" DATETIME NOT NULL,
+    "updated_at" DATETIME NOT NULL,
+    PRIMARY KEY ("id")
+);

@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS "pos_table" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "offset_x" INTEGER NOT NULL,
+    "offset_y" INTEGER NOT NULL,
+    "account_id" TEXT,
+    "ticket_id" TEXT,
+    PRIMARY KEY ("id")
+);

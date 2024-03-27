@@ -1,0 +1,273 @@
+syntax ="proto3";
+
+package grpc_services;
+
+service AuthService {
+    rpc Login(LoginRequest) returns(LoginResponse) {}
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string token = 1;
+    AccountResponse account = 2;
+}
+
+service AccountService {
+    rpc CreateAccount(CreateAccountRequest) returns (AccountResponse) {}
+    rpc ReadAccounts(Empty) returns (Accounts) {}
+    rpc DeleteAccountById(AccountByIdRequest) returns (AccountResponse) {}
+}
+
+message User {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    int64 created_at = 4;
+    int64 updated_at = 5;
+}
+
+enum AccountType {
+    ADMIN = 0;
+    CASHIER = 1;
+    WAITER = 2;
+}
+
+message Account {
+    string id = 1;
+    string username = 2;
+    string password = 3;
+    AccountType account_type = 4;
+    bool is_active = 5;
+    string user_id = 6;
+    User user = 7;
+    int64 created_at = 8;
+    int64 updated_at = 9;
+}
+
+message Accounts {
+    repeated AccountResponse accounts = 1;
+}
+
+message CreateAccountRequest {
+    string name = 1;
+    string email = 2;
+    string username = 3;
+    string password = 4;
+    AccountType account_type = 5;
+    bool is_active = 6;
+}
+
+message AccountResponse {
+    string id = 1;
+    string username = 2;
+    AccountType account_type = 3;
+    bool is_active = 4;
+    string user_id = 5;
+    User user = 6;
+    int64 created_at = 7;
+    int64 updated_at = 8;
+}
+
+message AccountByIdRequest {
+    string id = 1;
+}
+
+service CategoryService {
+    rpc CreateCategory(CreateCategoryRequest) returns (Category){}
+    rpc ReadCategories(Empty) returns (Categories){}
+    rpc ReadCategoryById(CategoryByIdRequest) returns (Category){}
+    rpc UpdateCategory(UpdateCategoryRequest) returns (Category){}
+    rpc DeleteCategoryById(CategoryByIdRequest) returns (Category){}
+    rpc CreateProductCategoryLink(RequestCategoryProduct) returns (Category){}
+    rpc ReadCategoriesByProductId(ProductByIdRequest) returns (Categories){}
+    rpc ReadProductsByCategoryId(CategoryByIdRequest) returns (Products){}
+}
+
+message Empty {}
+
+message Category {
+    string id = 1;
+    string name = 2;
+    int64 create_at = 3;
+    int64 update_at = 4;
+}
+
+message Categories {
+    repeated Category categories = 1;
+}
+
+message CreateCategoryRequest {
+    string name = 1;
+}
+
+message CategoryByIdRequest {
+    string id = 1;
+}
+
+message UpdateCategoryRequest {
+    string id = 1;
+    string name = 2;
+}
+
+service ProductService {
+    rpc CreateProduct(CreateProductRequest) returns (Product){}
+    rpc ReadProducts(Empty) returns (Products){}
+    rpc ReadProductById(ProductByIdRequest) returns (Product){}
+    rpc UpdateProduct(UpdateProductRequest) returns (Product){}
+    rpc DeleteProductById(ProductByIdRequest) returns (Product){}
+    rpc CreateProductCategoryLink(RequestCategoryProduct) returns (Product){}
+    rpc DeleteProductCategoryLink(RequestCategoryProduct) returns (Product){}
+    rpc ReadCategoriesByProductId(ProductByIdRequest) returns (Categories){}
+    rpc ReadProductsByCategoryId(CategoryByIdRequest) returns (Products){}
+}
+
+message RequestCategoryProduct {
+    string product_id = 1;
+    string category_id = 2;
+}
+
+message Product {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    double price = 4;
+    int64 create_at = 5;
+    int64 update_at = 6;
+}
+
+message Products {
+    repeated Product products = 1;
+}
+
+message UpdateProductRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    double price = 4;
+}
+
+message CreateProductRequest {
+    string name = 1;
+    string description = 2;
+    double price = 3;
+}
+
+message ProductByIdRequest {
+    string id = 1;
+}
+
+service TicketService {
+    rpc CreateTicket(Empty) returns (Ticket){}
+    rpc ReadTickets(ReadTicketsRequest) returns (Tickets){}
+    rpc ReadTicketById(TicketByIdRequest) returns (Ticket){}
+    rpc CancelTicketById(TicketByIdRequest) returns (Ticket){}
+    rpc PayTicket(TicketByIdRequest) returns (Ticket){}
+    rpc AddProduct(AddRemoveTicketProductRequest) returns (Ticket){}
+    rpc DeleteProduct(AddRemoveTicketProductRequest) returns (Ticket){}
+}
+
+message ReadTicketsRequest {
+    optional Criteria criteria = 1;
+}
+
+message AddRemoveTicketProductRequest {
+    string ticket_id = 1;
+    string product_id = 2;
+}
+
+message TicketByIdRequest {
+    string id = 1;
+}
+
+message TicketProduct {
+    string product_id = 1;
+    string ticket_id = 2;
+    int32 quantity = 3;
+    string name = 4;
+    string description = 5;
+    double price = 6;
+}
+
+enum TicketStatus {
+    OPEN = 0;
+    CANCEL = 1;
+    PAID = 2;
+}
+
+message Ticket {
+    string id = 1;
+    TicketStatus ticket_status = 2;
+	double total = 3;
+	string account_id = 4;
+    repeated TicketProduct products = 5;
+    int64 create_at = 6;
+    int64 update_at = 7;
+}
+
+message Tickets {
+    repeated Ticket tickets = 1;
+}
+
+enum FilterOperator {
+    EQUAL = 0;
+	NOT_EQUAL = 1;
+	GT = 2;
+	LT = 3;
+	CONTAINS = 4;
+	NOT_CONTAINS = 5;
+}
+
+message Filter {
+    string field = 1;
+    FilterOperator operator = 2;
+    string value = 3;
+}
+
+message Criteria {
+    repeated Filter filters = 1;
+}
+
+service TableService {
+    rpc CreateTable(CreateTableRequest) returns (Table) {}
+    rpc ReadTables(Empty) returns (Tables) {}
+    rpc UpdateTable(UpdateTableRequest) returns (Table) {}
+    rpc UpdateOffset(UpdateOffsetRequest) returns (Table) {}
+    rpc OpenTable(TableByIdRequest) returns (Table) {}
+    rpc DeleteTable(TableByIdRequest) returns (Table) {}
+}
+
+message UpdateOffsetRequest {
+    string id = 1;
+    int32 offset_x = 2;
+    int32 offset_y = 3;
+}
+
+message TableByIdRequest {
+    string id = 1;
+}
+
+message UpdateTableRequest {
+    string id = 1;
+    string name = 2;
+}
+
+message CreateTableRequest {
+    string name = 1;
+}
+
+message Table {
+    string id = 1;
+    string name = 2;
+    int32 offset_x = 3;
+    int32 offset_y = 4;
+    optional string account_id = 5;
+    optional string ticket_id = 6;
+}
+
+message Tables {
+    repeated Table tables = 1;
+}

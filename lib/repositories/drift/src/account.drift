@@ -1,0 +1,13 @@
+import 'user.drift';
+CREATE TABLE IF NOT EXISTS "account" (
+    "id" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "account_type" TEXT NOT NULL,
+    "is_active" INTEGER NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "created_at" DATETIME NOT NULL,
+    "updated_at" DATETIME NOT NULL,
+    PRIMARY KEY ("id"),
+    CONSTRAINT "fk_users_account" FOREIGN KEY ("user_id") REFERENCES "user"("id")
+);

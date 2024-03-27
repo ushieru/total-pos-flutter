@@ -1,0 +1,7 @@
+import 'table.drift';
+emptyTableByAccountIdAndTicketId:
+UPDATE "pos_table"
+SET "account_id" = NULL,
+    "ticket_id" = NULL
+WHERE account_id = ?
+    AND ticket_id = ?;

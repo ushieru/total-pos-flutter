@@ -1,0 +1,28 @@
+import 'category.drift';
+import 'product.drift';
+import 'category_product.drift';
+getCategoriesByProductId:
+SELECT "category"."id",
+    "category"."name",
+    "category"."create_at",
+    "category"."update_at"
+FROM "category_product"
+    INNER JOIN "category" ON "category"."id" = "category_product"."category_id"
+WHERE "category_product"."product_id" = ?;
+getProductsByCategoryId:
+SELECT "product"."id",
+    "product"."name",
+    "product"."description",
+    "product"."price",
+    "product"."create_at",
+    "product"."update_at"
+FROM "product"
+    INNER JOIN "category_product" ON "product"."id" = "category_product"."product_id"
+WHERE "category_product"."category_id" = ?;
+insertCategoryProductLink:
+INSERT INTO "category_product"
+VALUES (?, ?);
+deleteCategoryProductLink:
+DELETE FROM "category_product"
+WHERE "category_product"."category_id" = ?
+    AND "category_product"."product_id" = ?;
