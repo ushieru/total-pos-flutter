@@ -1,6 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:total_pos/generated/protos/main.pbgrpc.dart';
-import 'package:total_pos/ui/utils/session.dart';
+import 'package:total_pos/grpc/interceptors/client/auth_interceptor.dart';
 
 class GrpcClientSingleton {
   GrpcClientSingleton._(
